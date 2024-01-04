@@ -1,0 +1,25 @@
+.bg-color-1 {
+    background-color: rgb(208, 139, 148)
+}
+
+.bg-color-2 {
+    background-color: rgb(208, 199, 139)
+}
+
+.bg-color-3 {
+    background-color: rgb(139, 208, 199)
+}
+
+.bg-color-4 {
+    background-color: rgb(199, 139, 208)
+}
+
+.bg-color-5 {
+    background-color: rgb(71, 81, 252)
+}
+.center {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
