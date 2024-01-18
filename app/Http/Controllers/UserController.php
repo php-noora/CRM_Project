@@ -26,6 +26,7 @@ class UserController extends Controller
     }
 
     public function store(UserRequest $request)
+    
     {
         User::create($request->all());
         return redirect()->route('users.index');
@@ -65,7 +66,6 @@ class UserController extends Controller
 
     public function createUser(Request $request)
     {
-
         try {
             $validateUser = Validator::make($request->all(),
                 [
@@ -128,7 +128,8 @@ class UserController extends Controller
             if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'validation error'
+                    ,
                     'errors' => $validateUser->errors(),
                 ], 401);
             }
@@ -138,6 +139,7 @@ class UserController extends Controller
                     'message' => 'Email & Password does not match with our record.',
                 ], 401);
             }
+            dd($request);
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('API TOKEN')->plainTextToken;
             return redirect()->route('workplace',['token' => $token]);
@@ -153,5 +155,10 @@ class UserController extends Controller
                 'message' => $th->getMessage(),
             ], 500);
         }
+    }
+
+    public function fillterUser(request $request){
+
+
     }
 }

@@ -13,25 +13,25 @@ return new class extends Migration
     {
         Schema::create('order_product', function (Blueprint $table) {
             $table->id();
+            $table->id();
             $table->foreignId('order_id');
             $table->foreignId('product_id');
 
+            $table->foreign('Product_id')
+            ->references('id')
+            ->on('products')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
 
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreign('order_id')
-                ->references('id')
-                ->on('orders')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->forein('order_id')
+            ->references('id')
+            ->on('orders')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
 
             $table->integer('count')->default(0);
-            $table->enum('status', ['enable' , 'disable'])->default('enable');
-
+            $table->enum('status',['enable','disable'])->default('enable');
+          
             $table->timestamps();
         });
     }

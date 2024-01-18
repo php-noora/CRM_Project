@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -20,7 +22,7 @@ class AuthController extends Controller
                     'lastname' => 'required',
                     'email' => 'required|email',
                     'password' => 'required',
-                    'role'=>'required',
+                    'role' => 'required',
 
                 ]
             );
@@ -36,22 +38,24 @@ class AuthController extends Controller
                 'lastname' => $request->lastname,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role'=>$request->role,
+                'role' => $request->role,
             ]);
             $token = $Userr->createToken('api_token')->plainTextToken;
 
 
             return redirect()->route('workplace');
-        }catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage(),
             ], 500);
         }
 
-}
+    }
+
     public function loginUser(Request $request)
     {
+
         try {
             $validateUser = Validator::make($request->all(),
                 [
@@ -67,7 +71,7 @@ class AuthController extends Controller
                     'errors' => $validateUser->errors(),
                 ], 401);
             }
-            if (!Auth::attempt($request->only(['email', 'password']))) {
+            if (!Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
@@ -75,25 +79,21 @@ class AuthController extends Controller
             }
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('API TOKEN')->plainTextToken;
-            return redirect()->route('workplace',['token' => $token]);
+            return redirect()->route('workplace', ['token' => $token]);
 
-//            return response()->json([
-//                'status' => true,
-//                'message' => 'User Logged In Successfully',
-//
-//            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage(),
             ], 500);
         }
+
     }
 
     public function logoutUser(request $request)
     {
         $request->user()->tokens()->delete();
-        return view('authorize.login') ;
+        return view('authorize.login');
     }
 
 

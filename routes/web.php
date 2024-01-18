@@ -7,8 +7,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-
 //users
+Route::post('user/fillter',[UserController::class ,'fillterUser'])->name('user.fillter');
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -47,11 +47,11 @@ Route::post('auth/register', [AuthController::class, 'UserRegister'])->name('reg
 Route::any('auth/login', [AuthController::class, 'loginUser'])->name('loginUser');
 Route::get('auth/logout', [AuthController::class, 'logoutUser'])->name('logoutuser')->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
     Route::get('/check/create', [checkController::class, 'create'])->name('check.create');
     Route::get('/check/index', [checkController::class, 'index'])->name('check.index');
     Route::any('/check/store', [checkController::class, 'store'])->name('check.store');
     Route::get('/check/{id}/edit', [checkController::class, 'edit'])->name('check.edit');
     Route::patch('/check/{id}', [checkController::class, 'update'])->name('check.update');
     Route::delete('/check/{id}/delete', [checkController::class, 'destroy'])->name('check.destroy');
-});
+//});
