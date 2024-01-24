@@ -39,7 +39,9 @@
                         <div class="form-group">
                             <label for="order_id">اسم سفارش</label>
                             <select name="order_id" class="form-control" onchange="updateTotalPrice(this)">
-                                @foreach($orders as $order)
+                                <option value="" selected>
+                                    انتخاب سفارش
+                                </option>                                @foreach($orders as $order)
                                     <option value="{{ $order->id }}" name="order_id" data-total-price="{{ $order->total_price }}">
                                         {{ $order->title }}
                                     </option>

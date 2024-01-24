@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('city');
             $table->string('province');
             $table->enum('gender' , ['female' , 'male']);
-            $table->softDeletes();
             $table->timestamps();
 
 

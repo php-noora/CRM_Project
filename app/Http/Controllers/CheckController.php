@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckRequest;
 use App\Models\Check;
+use App\Models\Factor;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -19,16 +20,17 @@ class CheckController extends Controller
     public function index()
     {
 
-        $checks = Check::all();
+        $checks = Factor::all();
         return view('checks.checksData', ['checks' => $checks]);
 
     }
 
     public function store(CheckRequest $request)
     {
-        Check::create([
+        Factor::create([
             'order_id' => $request->order_id,
-            'name' => $request->title,
+            'total_price'=>$request->total_pay,
+            'title' => $request->title,
 
         ]);
         return redirect()->route('check.index');
@@ -36,13 +38,13 @@ class CheckController extends Controller
 
     public function edit(string $id)
     {
-        $checks = check::find($id);
+        $checks = Factor::find($id);
         return view('checks.editCheckMenue', ['check' => $checks]);
     }
 
     public function update(CheckRequest $request, $id)
     {
-        check::where('id', $id)->update([
+        Factor::where('id', $id)->update([
             'title' => $request->title,
         ]);
         return redirect()->route('check.index');
@@ -50,7 +52,7 @@ class CheckController extends Controller
 
     public function destroy( $id)
     {
-        $product = check::find($id);
+        $product = Factor::find($id);
         $product->delete();
         return back();
     }

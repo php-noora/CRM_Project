@@ -26,7 +26,7 @@ class UserController extends Controller
     }
 
     public function store(UserRequest $request)
-    
+
     {
         User::create($request->all());
         return redirect()->route('users.index');
@@ -157,8 +157,56 @@ class UserController extends Controller
         }
     }
 
-    public function fillterUser(request $request){
-
+    public function filter(request $request){
+        $users= User::all();
+        if($request->filterEmail){
+            $users=$users->where('email',$request->filterEmail);
+        }
+        if($request->filterFirstName){
+            $users = $users->where('firstname'.$request->filterFirstName);
+        }
+        if($request->filterLastName){
+            $users= $users->where('lastname',$request->filterLastName);
+        }
+        if($request->filterUserName){
+            $users = $users->where('username',$request->filterUserName);
+        }
+        if($request->filterPhoneNumber){
+            $users = $users->where('phonenumber',$request->filterPhoneNumber);
+        }
+        if($request->filterAgeMin){
+            $users = $users->where('age',$request->filterAgeMin);
+        }
+        if ($request->filterGender) {
+            $users = $users->where('gender', $request->filterGender);
+        }
+        if ($request->filterPostalCode) {
+            $users = $users->where('postal_code', $request->filterPostalCode);
+        }
+        $query = [];
+        if ($request ->filterOrderStatus){
+            if ($request->filterOrderStatus=='true'){
+                foreach($users as $user){
+                    if ($users->orders->count()){
+                        $query[] =$users->id;
+                    }
+                }
+            }
+            if ($request->filterOrderStatus == 'false') {
+                foreach ($users as $user) {
+                    if (!$user->orders->count()) {
+                        $query[] = $user->id;
+                    }
+                }
+                $users = $users->find($query);
+            }if($request->filterRole == '1'){
+                $users = $users->where('role','customer');
+            }
+            if($request->filterRole == '2'){
+                $users = $users->where('role','seller');
+            }
+            return view('users.usersData', ['users' => $users]);
+        }
 
     }
 }
