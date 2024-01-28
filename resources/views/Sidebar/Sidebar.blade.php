@@ -60,6 +60,7 @@
                         </li>
                     </ul>
                 </li>
+                @if(auth()->user()->role=='admin')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="far fa-user-circle nav-icon"></i>
@@ -106,6 +107,8 @@
                         </li>
                     </ul>
                 </li>
+                @endcanany
+                @if(auth()->user()->role=='admin'|| auth()->user()->role=='seller')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fas fa-tags nav-icon"></i>
@@ -129,6 +132,8 @@
                         </li>
                     </ul>
                 </li>
+                @endif
+                @if(auth()->user()->role=='admin' || auth()->user()->role=='customer')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fas fa-cart-arrow-down nav-icon"></i>
@@ -152,6 +157,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fas fa-cash-register nav-icon"></i>

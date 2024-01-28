@@ -38,7 +38,7 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            
+
                             <table id="Data" class="table table-bordered table-striped table table-hover">
                                 <thead>
                                 <tr>
@@ -83,15 +83,15 @@
                                                         </table>
                                                     </div>
                                                 </div>
-                                           
+
                                         </td>
                                         <td>
-                                       
+
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
-                               
+
                                 </tfoot>
                             </table>
                         </div>
